@@ -1,3 +1,11 @@
+/*
+Once compiled the program will continue to run until you close the terminal.
+The program starts with 5 cupcakes with a max of 10. 
+Eventually the consumer thread will have to wait for a new cupcake to be produced.
+Every two seconds a new cupcakes is produced by producer_thread.
+Every one second a cupcake will be consumed by consumer_thread.
+*/
+
 #include <stdio.h>
 #include <pthread.h>
 #include <stdbool.h>
