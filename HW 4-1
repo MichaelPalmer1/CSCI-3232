@@ -1,0 +1,46 @@
+In case anyone needs any help I believe this is how you do it.. This will be over state A,B,C
+
+
+Make sure you include:
+#include <stdio.h>
+#include <pthread.h>
+#include <stdbool.h>
+#include <semaphore.h>
+
+Create 3 functions for A,B,C.
+Create 3 threads and join them (see cupcake to see how)
+
+Above your main() declare 3 semaphores (sem_t a,b,c;  //for example)
+In your main create this: sem_init(&a,0,0); (You will need one for every state).
+
+If you run your program at this point it will run state A,B,C in random order.... but we need to start with A, then
+go to B/C or C/B.
+
+To do this, in state B and C for the first line include this line: "sem_wait(&a);"
+Even if state B and C runs before A, it will pause and let A do its thing.
+This is because of the ealier command "sem_init(&a,0,0);" That last number is zero. 
+"sem_wait()" will pause the thread whilst that number is zero.
+To increment that zero we need the command "sem_post(&a);"
+This will now bring sem_init(&a,0,0) to sem_init(&a,0,1).
+Since sem_wait(&a) is now false (sem_wait(&a) =! 0)... the thread in either B or C will now run.
+
+So for example:
+
+STATE A(){
+//RUN STUFF
+sem_post(&a);
+sem_post(&a);
+//We need two because we need to open up 2 threads.
+}
+
+STATE B(){
+sem_wait(&a);
+//RUN STUFF
+}
+
+STATE C(){
+sem_wait(&a);
+RUN STUFF
+}
+
+
