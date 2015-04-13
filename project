@@ -1,0 +1,208 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <stdbool.h>
+//#include <pthread.h>
+//#include <semaphore.h>
+
+int getLines(FILE *in);
+//int getLines(char *fname);
+int searchFor(char key, FILE *in );
+//int searchFor(char key, char *fname);
+
+bool thisMethod(int [],int );
+bool boolTime=false;
+
+int main() {
+FILE *output;
+FILE *myfile;
+srand(time(NULL));
+char ch[20];
+int i = 0;
+int j=0;
+int len;
+int array[50];
+for( j=0;j<50;j++){
+array[j]=rand() % 90000;}
+
+
+myfile = fopen("/usr/share/dict/american-english","r");
+output = fopen("sample.txt","w");
+int random;
+while(fgets(ch,20,myfile)!=NULL){
+len = strlen(ch);
+if(ch[len-1]=='\n'){
+ch[len-1]=0;}
+thisMethod(array,i);
+
+if (boolTime==true){
+
+ fwrite(ch,sizeof(char),strlen(ch),output);
+random =rand()%8;
+ fwrite(" ",1,1,output);
+if(random==1){
+fwrite("\n",1,1,output);}
+ 
+    }
+i++;
+boolTime=false;
+}
+
+
+    fclose(myfile);
+
+fclose(output);
+
+
+ 
+
+
+
+int randomLength, randomLetters, randomLines, randomSpace;
+
+//Random number of lines (10 to 20)
+randomLines=rand() % 10+10;
+//Random number of words per line (5 to 10)
+randomSpace=rand() % 5+5;
+
+
+
+
+char scannedLetter;
+	printf("What letter do you want to scan for? ");
+scanf(" %c",&scannedLetter);
+	//open file
+	
+	output = fopen("sample.txt", "r");
+	
+	//print the result of the number of lines function
+	printf("Number of lines = %d\n",getLines(output));
+	
+	//close file 
+	fclose(output);
+	
+	//open file again
+	output = fopen("sample.txt", "r");
+
+	//print the result of the search for function
+	printf("Number of times %c found = %d\n",scannedLetter, searchFor(scannedLetter,output));
+
+	//close file again
+	fclose(output);
+	
+	/*
+	//These are the alternative functions (more streamlined I guess)
+	printf("Number of lines = %d\n",getLines("a.txt"));
+	printf("Number of times found = %d\n",searchFor('o',"a.txt"));
+	*/
+
+	return 0;
+}
+
+
+
+//This is a function that returns the number of lines in a FILE
+//We probably won't need this but included it just in case
+int getLines(FILE *output){
+	
+	//variable to store num of lines
+	int lines = 0;
+	int len2;
+	//variable to get each char from the file
+	char letter;
+	
+	//every time it sees \n it recognizes a line
+	while ( ( letter = fgetc(output) ) != EOF ) {
+
+		if(letter == '\n'){
+			lines++;
+		
+	}
+
+	
+}
+return lines;
+}
+/*
+//There is only one difference between the functions
+//This get Lines function takes a file name rather than a FILE.
+int getLines(char *fname){
+	
+	int lines = 0;
+	char letter;
+	
+	FILE *in;
+	in = fopen(fname, "r");
+	
+	if ( in == NULL ) {
+		perror("Error opening file");
+		exit(1);
+	}
+
+	while ( ( letter = fgetc(in) ) != EOF ) {
+		if(letter == '\n'){
+			lines++;
+		}
+	}
+	
+	fclose(in);
+	return lines;
+}
+
+*/
+int searchFor(char key, FILE *output ){
+	
+	//variable to store the number of matching chars found
+	int found = 0;
+	
+	//variable to get each char from the file
+	char letter;
+	
+	//each time it finds the letter it increases found
+	while ( ( letter = fgetc(output) ) != EOF ) {
+		if(letter == key){
+			found++;
+		}
+	}
+	
+	return found;
+}
+
+
+/*
+//This search function takes a file name rather than a FILE
+int searchFor(char key,char *fname ){
+	
+	int found = 0;
+	char letter;
+
+	FILE *in;
+	in = fopen(fname, "r");
+	
+	if ( in == NULL ) {
+		perror("Error opening file");
+		exit(1);
+	}
+
+	while ( ( letter = fgetc(in) ) != EOF ) {
+		if(letter == key){
+			found++;
+		}
+	}
+	
+	fclose(in);
+	return found;
+}
+
+*/
+
+
+
+bool thisMethod(int array[],int i){
+int k=0;
+for (k;k<50;k++){
+if (array[k]==i)
+boolTime=true;}
+}
+
